@@ -2,38 +2,90 @@
 <html>
     <head>
         <title>検索条件メンテナンス</title>
+        <style>
+            section {
+                border: 1px solid black;
+                margin: 10px;
+                padding: 10px;
+            }
+        </style>
     </head>
     <body>
         <label>名前：<input type="text" id="name" /></label>
         <div>
             <label>パラメータ</label>
-            <input type="text" id="parameter-1" />
-            <button id="addParameterButton">追加</button>
-            <button id="removeParameterButton">削除</button>
+            <section id="parameters">
+            </section>
+            <button id="addParameterButton">パラメータ追加</button>
         </div>
 
-        <div>
-            <div>
-                <label>順番<span>1</span></label>
-                <select id="datasource-1">
-                </select>
-                <label>テーブル：<input type="text" id="table-1" /></label>
-                <div>
-                    <label>カラム：<input type="text" id="column-1" /></label>
-                    <select>
-                        <option>等しい</option>
-                        <option>BETWEEN</option>
-                    </select>
-                    <label>対象：<input type="text" /></label>
-                    <label>プロパティ：<input type="text" /></label>
+        <section id="searchDefinition">
+        </section>
+        <button id="addTableButton">テーブル追加</button>
 
-                    <button class="addFilterButton" data-index="1">追加</button>
-                    <button class="removeFilterButton" data-index="1">削除</button>
+        <script src="/js/jquery-3.1.1.min.js"></script>
+        <script src="/js/underscore-min.js"></script>
+        <script src="/js/mustache.min.js"></script>
+        <script src="/js/search-definitions.js"></script>
+
+        <script type="text/html" id="parameterTemplate">
+            <section id="parameterDefinition-{{parameterIndex}}">
+                <input type="text" /> <button id="removeParameterButton-{{parameterIndex}}">パラメータ削除</button>
+            </section>
+        </script>
+
+        <script type="text/html" id="tableTemplate">
+            <section id="tableDefinition-{{tableIndex}}">
+                <label>テーブル名：<input type="text" /></label>
+                <div id="columnDefinitions-{{tableIndex}}">
                 </div>
-            </div>
-            <button id="addTableButton">追加</button>
-            <button id="removeTableButton">削除</button>
-        </div>
+                <button id="addColumnButton-{{tableIndex}}">カラム追加</button>
+                <button id="removeTableButton-{{tableIndex}}">テーブル削除</button>
+            </section>
+        </script>
 
+        <script type="text/html" id="columnTemplate">
+            <section id="columnDefinition-{{tableIndex}}-{{columnIndex}}">
+                <label>カラム名：<input type="text" /></label>
+
+                <select id="compareType-{{tableIndex}}-{{columnIndex}}">
+                    <option value="equal">等しい</option>
+                    <option value="between">BETWEEN</option>
+                </select>
+
+                <section id="equalSection-{{tableIndex}}-{{columnIndex}}">
+                    <select id="equalType-{{tableIndex}}-{{columnIndex}}">
+                        <option value="parameter" selected>パラメータ</option>
+                        <option value="searchResult">検索結果</option>
+                    </select>
+
+                    <section id="parameterSection-{{tableIndex}}-{{columnIndex}}">
+                        <label>名前：<input type="text" /></label>
+                    </section>
+
+                    <section id="searchResultSection-{{tableIndex}}-{{columnIndex}}" style="display: none;">
+                        <label>テーブル：<input type="text" /></label>
+                        <label>カラム：<input type="text" /></label>
+                    </section>
+                </section>
+
+                <section id="betweenSection-{{tableIndex}}-{{columnIndex}}" style="display: none;">
+                    <label>from：
+                        <select id="from-{{tableIndex}}-{{columnIndex}}">
+                            <option value="lastMonth" selected>先月</option>
+                            <option value="today">本日</option>
+                        </select>
+                    </label>
+                    <label>to：
+                        <select id="to-{{tableIndex}}-{{columnIndex}}">
+                            <option value="lastMonth">先月</option>
+                            <option value="today" selected>本日</option>
+                        </select>
+                    </label>
+                </section>
+
+                <button id="removeColumnButton-{{tableIndex}}-{{columnIndex}}">カラム削除</button>
+            </section>
+        </script>
     </body>
 </html>
