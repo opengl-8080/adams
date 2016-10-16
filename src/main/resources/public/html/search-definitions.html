@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>検索条件メンテナンス</title>
+    </head>
+    <body>
+        <label>名前：<input type="text" id="name" /></label>
+        <div>
+            <label>パラメータ</label>
+            <input type="text" id="parameter-1" />
+            <button id="addParameterButton">追加</button>
+            <button id="removeParameterButton">削除</button>
+        </div>
+
+        <div>
+            <div>
+                <label>順番<span>1</span></label>
+                <select id="datasource-1">
+                </select>
+                <label>テーブル：<input type="text" id="table-1" /></label>
+                <div>
+                    <label>カラム：<input type="text" id="column-1" /></label>
+                    <select>
+                        <option>等しい</option>
+                        <option>BETWEEN</option>
+                    </select>
+                    <label>対象：<input type="text" /></label>
+                    <label>プロパティ：<input type="text" /></label>
+
+                    <button class="addFilterButton" data-index="1">追加</button>
+                    <button class="removeFilterButton" data-index="1">削除</button>
+                </div>
+            </div>
+            <button id="addTableButton">追加</button>
+            <button id="removeTableButton">削除</button>
+        </div>
+
+    </body>
+</html>

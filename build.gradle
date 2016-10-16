@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    provided 'org.projectlombok:lombok:1.16.10'
+
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.apache.commons:commons-dbcp2:2.1.1'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.5.2'
+}
+
+jar {
+    baseName = 'adams'
+}

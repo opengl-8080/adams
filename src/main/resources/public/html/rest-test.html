@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>rest test</title>
+    </head>
+    <body>
+        <button id="send">Send</button><br>
+        url: http://localhost:8080/<input type="text" id="url" /><br>
+        method:<input type="text" id="method" /><br>
+        <textarea id="json" style="display: inline-box; width: 400px; height: 1000px;"></textarea>
+        <textarea id="response" style="display: inline-box; width: 800px; height: 1000px;"></textarea>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('#send').on('click', function() {
+                    $('#response').val('');
+                    var method = $('#method').val();
+                    var url = '/' + $('#url').val();
+                    var json = $('#json').val();
+
+                    if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT') {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            data: json
+                        })
+                        .complete(function(xhr) {
+                            var response = JSON.stringify(xhr, null, 4);
+                            $('#response').val(response);
+                        });
+                    } else {
+                        $.ajax({
+                            url: url,
+                            type: method,
+                            contentType: 'application/json',
+                            dataType: 'json'
+                        })
+                        .complete(function(xhr) {
+                            var response = JSON.stringify(xhr, null, 4);
+                            $('#response').val(response);
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
